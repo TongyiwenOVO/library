@@ -322,6 +322,76 @@ public class BookExample {
             return (Criteria) this;
         }
 
+        public Criteria andBookPhotoIsNull() {
+            addCriterion("book_photo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoIsNotNull() {
+            addCriterion("book_photo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoEqualTo(String value) {
+            addCriterion("book_photo =", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoNotEqualTo(String value) {
+            addCriterion("book_photo <>", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoGreaterThan(String value) {
+            addCriterion("book_photo >", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoGreaterThanOrEqualTo(String value) {
+            addCriterion("book_photo >=", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoLessThan(String value) {
+            addCriterion("book_photo <", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoLessThanOrEqualTo(String value) {
+            addCriterion("book_photo <=", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoLike(String value) {
+            addCriterion("book_photo like", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoNotLike(String value) {
+            addCriterion("book_photo not like", value, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoIn(List<String> values) {
+            addCriterion("book_photo in", values, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoNotIn(List<String> values) {
+            addCriterion("book_photo not in", values, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoBetween(String value1, String value2) {
+            addCriterion("book_photo between", value1, value2, "bookPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookPhotoNotBetween(String value1, String value2) {
+            addCriterion("book_photo not between", value1, value2, "bookPhoto");
+            return (Criteria) this;
+        }
+
         public Criteria andBookTypeidIsNull() {
             addCriterion("book_typeid is null");
             return (Criteria) this;

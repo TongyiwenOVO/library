@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+
 import java.util.List;
 
 @Service
@@ -64,27 +66,25 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public boolean updateBook(Book book) {
+    public boolean updateBook(Book book,Author author) {
         Integer result=bookMapper.updateByPrimaryKeySelective(book);
-        return result>0?true:false;
+        Integer result1=authorMapper.updateByPrimaryKeySelective(author);
+        if (result>0&&result1>0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
     public List<Book> getBooks() {
         List<Book> books=bookMapper.selectByExampleWithAuthorAndBookType(null);
-        String baseString=null;
-        for (Book book:books){
-            baseString=Base64.encodeBase64String(book.getBookPhoto());
-            book.setBase64encoded(baseString);
-        }
         return books;
     }
 
     @Override
     public Book getBookById(Integer id) {
         Book book=bookMapper.selectByPrimaryKeyWithAuthorAndBookType(id);
-        String baseString=Base64.encodeBase64String(book.getBookPhoto());
-        book.setBase64encoded(baseString);
         return book;
     }
 
@@ -98,5 +98,14 @@ public class ManagerServiceImpl implements ManagerService {
     public List<BrrowInfo> getBrrowInfoByAccount(String account) {
         List<BrrowInfo> brrowInfos=brrowInfoMapper.selectByExampleWithAccountAndBookByAccount(account);
         return brrowInfos;
+    }
+
+    @Override
+    public List<Book> getBookByName(String bookName) {
+        BookExample example=new BookExample();
+        BookExample.Criteria criteria=example.createCriteria();
+        criteria.andBookNameLike("%"+bookName+"%");
+        List<Book> books=bookMapper.selectByExampleWithAuthorAndBookType(example);
+        return books;
     }
 }

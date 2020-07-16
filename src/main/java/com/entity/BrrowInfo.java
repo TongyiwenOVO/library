@@ -1,5 +1,9 @@
 package com.entity;
 
+
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class BrrowInfo {
@@ -9,8 +13,10 @@ public class BrrowInfo {
 
     private Integer bookid;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lendtime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date returntime;
 
     private Integer applytime;

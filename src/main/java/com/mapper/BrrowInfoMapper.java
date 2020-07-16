@@ -10,19 +10,18 @@ public interface BrrowInfoMapper {
 
     int deleteByExample(BrrowInfoExample example);
 
-    int deleteByPrimaryKey(Integer broId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(BrrowInfo record);
 
     int insertSelective(BrrowInfo record);
 
     List<BrrowInfo> selectByExample(BrrowInfoExample example);
-
     List<BrrowInfo> selectByExampleWithAccountAndBook(BrrowInfoExample example);
 
     List<BrrowInfo> selectByExampleWithAccountAndBookByAccount(String account);
 
-    BrrowInfo selectByPrimaryKey(Integer broId);
+    BrrowInfo selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") BrrowInfo record, @Param("example") BrrowInfoExample example);
 
@@ -31,4 +30,5 @@ public interface BrrowInfoMapper {
     int updateByPrimaryKeySelective(BrrowInfo record);
 
     int updateByPrimaryKey(BrrowInfo record);
+
 }

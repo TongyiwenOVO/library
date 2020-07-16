@@ -26,7 +26,7 @@
       <result column="authorid" jdbcType="INTEGER" property="authorid" />
       <result column="publisher" jdbcType="VARCHAR" property="publisher" />
       <result column="publishtime" jdbcType="DATE" property="publishtime" />
-      <result column="book_photo" jdbcType="LONGVARBINARY" property="bookPhoto" />
+      <result column="book_photo" jdbcType="VARCHAR" property="bookPhoto" />
     </association>
     <association property="account" javaType="com.entity.Account">
       <id column="id" jdbcType="INTEGER" property="id" />

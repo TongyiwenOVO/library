@@ -107,7 +107,7 @@ public class LoginAndRegisterController {
             if (count){
                 return Msg.success();
             }else {
-                return Msg.fail();
+                return Msg.fail().add("account",account);
             }
         }
     }
@@ -134,4 +134,18 @@ public class LoginAndRegisterController {
             }
         }else return Msg.fail().add("err_msg","验证码错误");
     }
+
+    /**
+     * Account登出，需要跳到登陆页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/logout")
+    @ResponseBody
+    public Msg logout(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        session.invalidate();
+        return Msg.success().add("logout_msg","用户已登出");
+    }
+
 }

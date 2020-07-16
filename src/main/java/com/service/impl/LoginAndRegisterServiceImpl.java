@@ -26,11 +26,16 @@ public class LoginAndRegisterServiceImpl implements LoginAndRegisterService {
 
     @Override
     public boolean saveAccount(Account account) {
-        String old_password=account.getPassword();
-        String md5_password=MD5Utils.md5(old_password);
-        account.setPassword(md5_password);
-        Integer result=accountMapper.insertSelective(account);
-        return result>0?true:false;
+        boolean b=this.checkRegister(account.getAccount());
+        if (!b){
+            String old_password=account.getPassword();
+            String md5_password=MD5Utils.md5(old_password);
+            account.setPassword(md5_password);
+            Integer result=accountMapper.insertSelective(account);
+            return result>0?true:false;
+        }else {
+            return false;
+        }
     }
 
     @Override

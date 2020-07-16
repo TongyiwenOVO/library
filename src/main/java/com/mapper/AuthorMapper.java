@@ -16,21 +16,15 @@ public interface AuthorMapper {
 
     int insertSelective(Author record);
 
-    List<Author> selectByExampleWithBLOBs(AuthorExample example);
-
     List<Author> selectByExample(AuthorExample example);
 
     Author selectByPrimaryKey(Integer authorId);
 
     int updateByExampleSelective(@Param("record") Author record, @Param("example") AuthorExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") Author record, @Param("example") AuthorExample example);
-
     int updateByExample(@Param("record") Author record, @Param("example") AuthorExample example);
 
     int updateByPrimaryKeySelective(Author record);
-
-    int updateByPrimaryKeyWithBLOBs(Author record);
 
     int updateByPrimaryKey(Author record);
 }

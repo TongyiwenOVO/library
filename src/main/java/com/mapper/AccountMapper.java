@@ -20,8 +20,6 @@ public interface AccountMapper {
 
     Account selectByPrimaryKey(Integer id);
 
-    Account selectCompleteAccount(String account);
-
     int updateByExampleSelective(@Param("record") Account record, @Param("example") AccountExample example);
 
     int updateByExample(@Param("record") Account record, @Param("example") AccountExample example);
@@ -29,4 +27,6 @@ public interface AccountMapper {
     int updateByPrimaryKeySelective(Account record);
 
     int updateByPrimaryKey(Account record);
+
+    Account selectCompleteAccount(String account);
 }

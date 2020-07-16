@@ -1,23 +1,21 @@
 package com.entity;
 
-import java.util.Arrays;
-
 public class Author {
     private Integer authorId;
 
     private String authorName;
 
-    private String authorInfo;
+    private String authorPhoto;
 
-    private byte[] authorPhoto;
+    private String authorInfo;
 
     @Override
     public String toString() {
         return "Author{" +
                 "authorId=" + authorId +
                 ", authorName='" + authorName + '\'' +
+                ", authorPhoto='" + authorPhoto + '\'' +
                 ", authorInfo='" + authorInfo + '\'' +
-                ", authorPhoto=" + Arrays.toString(authorPhoto) +
                 '}';
     }
 
@@ -37,19 +35,19 @@ public class Author {
         this.authorName = authorName == null ? null : authorName.trim();
     }
 
+    public String getAuthorPhoto() {
+        return authorPhoto;
+    }
+
+    public void setAuthorPhoto(String authorPhoto) {
+        this.authorPhoto = authorPhoto == null ? null : authorPhoto.trim();
+    }
+
     public String getAuthorInfo() {
         return authorInfo;
     }
 
     public void setAuthorInfo(String authorInfo) {
         this.authorInfo = authorInfo == null ? null : authorInfo.trim();
-    }
-
-    public byte[] getAuthorPhoto() {
-        return authorPhoto;
-    }
-
-    public void setAuthorPhoto(byte[] authorPhoto) {
-        this.authorPhoto = authorPhoto;
     }
 }

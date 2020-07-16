@@ -4,10 +4,8 @@
   <resultMap id="BaseResultMap" type="com.entity.Author">
     <id column="author_id" jdbcType="INTEGER" property="authorId" />
     <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="author_photo" jdbcType="VARCHAR" property="authorPhoto" />
     <result column="author_info" jdbcType="VARCHAR" property="authorInfo" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.entity.Author">
-    <result column="author_photo" jdbcType="LONGVARBINARY" property="authorPhoto" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,27 +66,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    author_id, author_name, author_info
+    author_id, author_name, author_photo, author_info
   </sql>
-  <sql id="Blob_Column_List">
-    author_photo
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.entity.AuthorExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from author
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.entity.AuthorExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -103,11 +82,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from author
     where author_id = #{authorId,jdbcType=INTEGER}
   </select>
@@ -122,15 +99,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.entity.Author">
-    insert into author (author_id, author_name, author_info, 
-      author_photo)
-    values (#{authorId,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR}, #{authorInfo,jdbcType=VARCHAR}, 
-      #{authorPhoto,jdbcType=LONGVARBINARY})
+    insert into author (author_id, author_name, author_photo, 
+      author_info)
+    values (#{authorId,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR}, #{authorPhoto,jdbcType=VARCHAR}, 
+      #{authorInfo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Author">
-<!--插入author信息之后将author_id返回到author实体的authorId中-->
-    <selectKey keyProperty="authorId" keyColumn="author_id" resultType="java.lang.Integer" order="AFTER">
-            select last_insert_id();
+    <!--配置插入操作后，获取插入数据的id  keyProperty对应实体类中的属性 keyColumn为数据库的字段名-->
+    <selectKey keyProperty="authorId" keyColumn="author_id" resultType="int" order="AFTER">
+      select last_insert_id();
     </selectKey>
     insert into author
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -140,11 +117,11 @@
       <if test="authorName != null">
         author_name,
       </if>
-      <if test="authorInfo != null">
-        author_info,
-      </if>
       <if test="authorPhoto != null">
         author_photo,
+      </if>
+      <if test="authorInfo != null">
+        author_info,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -154,11 +131,11 @@
       <if test="authorName != null">
         #{authorName,jdbcType=VARCHAR},
       </if>
+      <if test="authorPhoto != null">
+        #{authorPhoto,jdbcType=VARCHAR},
+      </if>
       <if test="authorInfo != null">
         #{authorInfo,jdbcType=VARCHAR},
-      </if>
-      <if test="authorPhoto != null">
-        #{authorPhoto,jdbcType=LONGVARBINARY},
       </if>
     </trim>
   </insert>
@@ -177,23 +154,13 @@
       <if test="record.authorName != null">
         author_name = #{record.authorName,jdbcType=VARCHAR},
       </if>
+      <if test="record.authorPhoto != null">
+        author_photo = #{record.authorPhoto,jdbcType=VARCHAR},
+      </if>
       <if test="record.authorInfo != null">
         author_info = #{record.authorInfo,jdbcType=VARCHAR},
       </if>
-      <if test="record.authorPhoto != null">
-        author_photo = #{record.authorPhoto,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update author
-    set author_id = #{record.authorId,jdbcType=INTEGER},
-      author_name = #{record.authorName,jdbcType=VARCHAR},
-      author_info = #{record.authorInfo,jdbcType=VARCHAR},
-      author_photo = #{record.authorPhoto,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -202,6 +169,7 @@
     update author
     set author_id = #{record.authorId,jdbcType=INTEGER},
       author_name = #{record.authorName,jdbcType=VARCHAR},
+      author_photo = #{record.authorPhoto,jdbcType=VARCHAR},
       author_info = #{record.authorInfo,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,25 +181,19 @@
       <if test="authorName != null">
         author_name = #{authorName,jdbcType=VARCHAR},
       </if>
+      <if test="authorPhoto != null">
+        author_photo = #{authorPhoto,jdbcType=VARCHAR},
+      </if>
       <if test="authorInfo != null">
         author_info = #{authorInfo,jdbcType=VARCHAR},
       </if>
-      <if test="authorPhoto != null">
-        author_photo = #{authorPhoto,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    where author_id = #{authorId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.Author">
-    update author
-    set author_name = #{authorName,jdbcType=VARCHAR},
-      author_info = #{authorInfo,jdbcType=VARCHAR},
-      author_photo = #{authorPhoto,jdbcType=LONGVARBINARY}
     where author_id = #{authorId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Author">
     update author
     set author_name = #{authorName,jdbcType=VARCHAR},
+      author_photo = #{authorPhoto,jdbcType=VARCHAR},
       author_info = #{authorInfo,jdbcType=VARCHAR}
     where author_id = #{authorId,jdbcType=INTEGER}
   </update>

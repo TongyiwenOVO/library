@@ -234,6 +234,76 @@ public class AuthorExample {
             return (Criteria) this;
         }
 
+        public Criteria andAuthorPhotoIsNull() {
+            addCriterion("author_photo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoIsNotNull() {
+            addCriterion("author_photo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoEqualTo(String value) {
+            addCriterion("author_photo =", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoNotEqualTo(String value) {
+            addCriterion("author_photo <>", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoGreaterThan(String value) {
+            addCriterion("author_photo >", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoGreaterThanOrEqualTo(String value) {
+            addCriterion("author_photo >=", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoLessThan(String value) {
+            addCriterion("author_photo <", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoLessThanOrEqualTo(String value) {
+            addCriterion("author_photo <=", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoLike(String value) {
+            addCriterion("author_photo like", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoNotLike(String value) {
+            addCriterion("author_photo not like", value, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoIn(List<String> values) {
+            addCriterion("author_photo in", values, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoNotIn(List<String> values) {
+            addCriterion("author_photo not in", values, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoBetween(String value1, String value2) {
+            addCriterion("author_photo between", value1, value2, "authorPhoto");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthorPhotoNotBetween(String value1, String value2) {
+            addCriterion("author_photo not between", value1, value2, "authorPhoto");
+            return (Criteria) this;
+        }
+
         public Criteria andAuthorInfoIsNull() {
             addCriterion("author_info is null");
             return (Criteria) this;

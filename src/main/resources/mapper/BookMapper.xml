@@ -5,13 +5,11 @@
     <id column="book_id" jdbcType="INTEGER" property="bookId" />
     <result column="book_name" jdbcType="VARCHAR" property="bookName" />
     <result column="book_number" jdbcType="INTEGER" property="bookNumber" />
+    <result column="book_photo" jdbcType="VARCHAR" property="bookPhoto" />
     <result column="book_typeid" jdbcType="INTEGER" property="bookTypeid" />
     <result column="authorid" jdbcType="INTEGER" property="authorid" />
     <result column="publisher" jdbcType="VARCHAR" property="publisher" />
     <result column="publishtime" jdbcType="DATE" property="publishtime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.entity.Book">
-    <result column="book_photo" jdbcType="LONGVARBINARY" property="bookPhoto" />
   </resultMap>
   <resultMap id="ResultMapWithBookTypeAndAuthor" type="com.entity.Book">
     <id column="book_id" jdbcType="INTEGER" property="bookId" />
@@ -21,11 +19,11 @@
     <result column="authorid" jdbcType="INTEGER" property="authorid" />
     <result column="publisher" jdbcType="VARCHAR" property="publisher" />
     <result column="publishtime" jdbcType="DATE" property="publishtime" />
-    <result column="book_photo" jdbcType="LONGVARBINARY" property="bookPhoto" />
+    <result column="book_photo" jdbcType="VARCHAR" property="bookPhoto" />
     <association property="author" javaType="com.entity.Author">
       <id column="author_id" property="authorId"></id>
       <result column="author_name" property="authorName"></result>
-      <result column="author_photo" property="authorPhoto" jdbcType="LONGVARBINARY"></result>
+      <result column="author_photo" property="authorPhoto" jdbcType="VARCHAR"></result>
       <result column="author_info" property="authorInfo"></result>
     </association>
     <association property="bookType" javaType="com.entity.BookType">
@@ -92,20 +90,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    book_id, book_name, book_number, book_typeid, authorid, publisher, publishtime
-  </sql>
-  <sql id="Blob_Column_List">
-    book_photo
+    book_id, book_name, book_number, book_photo, book_typeid, authorid, publisher, publishtime
   </sql>
   <sql id="BookTypeAndAuthor_List">
     b.book_id, b.book_name, b.book_number, b.book_typeid, b.authorid, b.publisher, b.publishtime,b.book_photo,bt.type_id,bt.type_name,a.author_id,a.author_name,a.author_photo,a.author_info
   </sql>
-  <select id="selectByPrimaryKeyWithAuthorAndBookType" parameterType="java.lang.Integer" resultMap="ResultMapWithBookTypeAndAuthor">
-    select
-    <include refid="BookTypeAndAuthor_List" />
-    from book b left join booktype bt on b.book_typeid=bt.type_id left join author a on b.authorid=a.author_id
-    where book_id = #{bookId,jdbcType=INTEGER}
-  </select>
   <select id="selectByExampleWithAuthorAndBookType" parameterType="com.entity.BookExample" resultMap="ResultMapWithBookTypeAndAuthor">
     select
     <if test="distinct">
@@ -120,21 +109,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExampleWithBLOBs" parameterType="com.entity.BookExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKeyWithAuthorAndBookType" parameterType="java.lang.Integer" resultMap="ResultMapWithBookTypeAndAuthor">
     select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from book
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
+    <include refid="BookTypeAndAuthor_List" />
+    from book b left join booktype bt on b.book_typeid=bt.type_id left join author a on b.authorid=a.author_id
+    where book_id = #{bookId,jdbcType=INTEGER}
   </select>
   <select id="selectByExample" parameterType="com.entity.BookExample" resultMap="BaseResultMap">
     select
@@ -150,11 +129,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from book
     where book_id = #{bookId,jdbcType=INTEGER}
   </select>
@@ -170,11 +147,11 @@
   </delete>
   <insert id="insert" parameterType="com.entity.Book">
     insert into book (book_id, book_name, book_number, 
-      book_typeid, authorid, publisher, 
-      publishtime, book_photo)
+      book_photo, book_typeid, authorid, 
+      publisher, publishtime)
     values (#{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookNumber,jdbcType=INTEGER}, 
-      #{bookTypeid,jdbcType=INTEGER}, #{authorid,jdbcType=INTEGER}, #{publisher,jdbcType=VARCHAR}, 
-      #{publishtime,jdbcType=DATE}, #{bookPhoto,jdbcType=LONGVARBINARY})
+      #{bookPhoto,jdbcType=VARCHAR}, #{bookTypeid,jdbcType=INTEGER}, #{authorid,jdbcType=INTEGER}, 
+      #{publisher,jdbcType=VARCHAR}, #{publishtime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.Book">
     insert into book
@@ -188,6 +165,9 @@
       <if test="bookNumber != null">
         book_number,
       </if>
+      <if test="bookPhoto != null">
+        book_photo,
+      </if>
       <if test="bookTypeid != null">
         book_typeid,
       </if>
@@ -200,9 +180,6 @@
       <if test="publishtime != null">
         publishtime,
       </if>
-      <if test="bookPhoto != null">
-        book_photo,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="bookId != null">
@@ -213,6 +190,9 @@
       </if>
       <if test="bookNumber != null">
         #{bookNumber,jdbcType=INTEGER},
+      </if>
+      <if test="bookPhoto != null">
+        #{bookPhoto,jdbcType=VARCHAR},
       </if>
       <if test="bookTypeid != null">
         #{bookTypeid,jdbcType=INTEGER},
@@ -225,9 +205,6 @@
       </if>
       <if test="publishtime != null">
         #{publishtime,jdbcType=DATE},
-      </if>
-      <if test="bookPhoto != null">
-        #{bookPhoto,jdbcType=LONGVARBINARY},
       </if>
     </trim>
   </insert>
@@ -249,6 +226,9 @@
       <if test="record.bookNumber != null">
         book_number = #{record.bookNumber,jdbcType=INTEGER},
       </if>
+      <if test="record.bookPhoto != null">
+        book_photo = #{record.bookPhoto,jdbcType=VARCHAR},
+      </if>
       <if test="record.bookTypeid != null">
         book_typeid = #{record.bookTypeid,jdbcType=INTEGER},
       </if>
@@ -261,24 +241,7 @@
       <if test="record.publishtime != null">
         publishtime = #{record.publishtime,jdbcType=DATE},
       </if>
-      <if test="record.bookPhoto != null">
-        book_photo = #{record.bookPhoto,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update book
-    set book_id = #{record.bookId,jdbcType=INTEGER},
-      book_name = #{record.bookName,jdbcType=VARCHAR},
-      book_number = #{record.bookNumber,jdbcType=INTEGER},
-      book_typeid = #{record.bookTypeid,jdbcType=INTEGER},
-      authorid = #{record.authorid,jdbcType=INTEGER},
-      publisher = #{record.publisher,jdbcType=VARCHAR},
-      publishtime = #{record.publishtime,jdbcType=DATE},
-      book_photo = #{record.bookPhoto,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -288,6 +251,7 @@
     set book_id = #{record.bookId,jdbcType=INTEGER},
       book_name = #{record.bookName,jdbcType=VARCHAR},
       book_number = #{record.bookNumber,jdbcType=INTEGER},
+      book_photo = #{record.bookPhoto,jdbcType=VARCHAR},
       book_typeid = #{record.bookTypeid,jdbcType=INTEGER},
       authorid = #{record.authorid,jdbcType=INTEGER},
       publisher = #{record.publisher,jdbcType=VARCHAR},
@@ -305,6 +269,9 @@
       <if test="bookNumber != null">
         book_number = #{bookNumber,jdbcType=INTEGER},
       </if>
+      <if test="bookPhoto != null">
+        book_photo = #{bookPhoto,jdbcType=VARCHAR},
+      </if>
       <if test="bookTypeid != null">
         book_typeid = #{bookTypeid,jdbcType=INTEGER},
       </if>
@@ -317,27 +284,14 @@
       <if test="publishtime != null">
         publishtime = #{publishtime,jdbcType=DATE},
       </if>
-      <if test="bookPhoto != null">
-        book_photo = #{bookPhoto,jdbcType=LONGVARBINARY},
-      </if>
     </set>
-    where book_id = #{bookId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.Book">
-    update book
-    set book_name = #{bookName,jdbcType=VARCHAR},
-      book_number = #{bookNumber,jdbcType=INTEGER},
-      book_typeid = #{bookTypeid,jdbcType=INTEGER},
-      authorid = #{authorid,jdbcType=INTEGER},
-      publisher = #{publisher,jdbcType=VARCHAR},
-      publishtime = #{publishtime,jdbcType=DATE},
-      book_photo = #{bookPhoto,jdbcType=LONGVARBINARY}
     where book_id = #{bookId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.entity.Book">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_number = #{bookNumber,jdbcType=INTEGER},
+      book_photo = #{bookPhoto,jdbcType=VARCHAR},
       book_typeid = #{bookTypeid,jdbcType=INTEGER},
       authorid = #{authorid,jdbcType=INTEGER},
       publisher = #{publisher,jdbcType=VARCHAR},

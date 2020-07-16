@@ -45,6 +45,8 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="mapperScannerConfigurer">
         <!--扫描所有dao接口-->
         <property name="basePackage" value="com.mapper"></property>
+        <!--配置会话工厂beanName-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
 

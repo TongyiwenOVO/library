@@ -17,7 +17,7 @@ public interface ManagerService {
 
     boolean deleteOneBook(Integer id);
 
-    boolean updateBook(Book book);
+    boolean updateBook(Book book,Author author);
 
     List<Book> getBooks();
 
@@ -26,4 +26,6 @@ public interface ManagerService {
     List<BrrowInfo> getBrrowInfo();
 
     List<BrrowInfo> getBrrowInfoByAccount(String account);
+
+    List<Book> getBookByName(String bookName);
 }

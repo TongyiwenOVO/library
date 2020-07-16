@@ -41,8 +41,6 @@
 <!--       <table tableName="account" domainObjectName="Account"></table>-->
         <table tableName="author" domainObjectName="Author"></table>
         <table tableName="book" domainObjectName="Book"></table>
-        <table tableName="booktype" domainObjectName="BookType"></table>
-        <table tableName="brrowinfo" domainObjectName="BrrowInfo"></table>
 
     </context>
 </generatorConfiguration>

@@ -1,6 +1,7 @@
 package com.entity;
 
-import java.util.Arrays;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Book {
@@ -10,29 +11,35 @@ public class Book {
 
     private Integer bookNumber;
 
+    private String bookPhoto;
+
     private Integer bookTypeid;
 
     private Integer authorid;
 
     private String publisher;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishtime;
-
-    private byte[] bookPhoto;
 
     private Author author;
 
     private BookType bookType;
 
-    private String base64encoded;
-
-    //保存图片Base64
-    public String getBase64encoded() {
-        return base64encoded;
-    }
-
-    public void setBase64encoded(String base64encoded) {
-        this.base64encoded = base64encoded;
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookNumber=" + bookNumber +
+                ", bookPhoto='" + bookPhoto + '\'' +
+                ", bookTypeid=" + bookTypeid +
+                ", authorid=" + authorid +
+                ", publisher='" + publisher + '\'' +
+                ", publishtime=" + publishtime +
+                ", author=" + author +
+                ", bookType=" + bookType +
+                '}';
     }
 
     public Author getAuthor() {
@@ -75,6 +82,14 @@ public class Book {
         this.bookNumber = bookNumber;
     }
 
+    public String getBookPhoto() {
+        return bookPhoto;
+    }
+
+    public void setBookPhoto(String bookPhoto) {
+        this.bookPhoto = bookPhoto == null ? null : bookPhoto.trim();
+    }
+
     public Integer getBookTypeid() {
         return bookTypeid;
     }
@@ -105,29 +120,5 @@ public class Book {
 
     public void setPublishtime(Date publishtime) {
         this.publishtime = publishtime;
-    }
-
-    public byte[] getBookPhoto() {
-        return bookPhoto;
-    }
-
-    public void setBookPhoto(byte[] bookPhoto) {
-        this.bookPhoto = bookPhoto;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "bookId=" + bookId +
-                ", bookName='" + bookName + '\'' +
-                ", bookNumber=" + bookNumber +
-                ", bookTypeid=" + bookTypeid +
-                ", authorid=" + authorid +
-                ", publisher='" + publisher + '\'' +
-                ", publishtime=" + publishtime +
-                ", bookPhoto=" + Arrays.toString(bookPhoto) +
-                ", author=" + author +
-                ", bookType=" + bookType +
-                '}';
     }
 }

@@ -11,10 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-<form action="Manager/upload" method="post" enctype="multipart/form-data">
-    选择上传图书文件：<input type="file" name="file"/><br/>
+<form action="User/brrowBook" method="post">
+    Id  <input type="text" name="bookId"><br/>
+    bookNumber <input type="text" name="bookNumber"><br/>
+    bookid <input type="text" name="bookid"><br/>
+    lendtime <input type="date" name="lendtime"><br/>
+    applytime <input type="text" name="applytime"><br/>
     <input type="submit" value="上传"/>
-<img src="/pic/1.jpg">
+
 </form>
 </body>
 </html>

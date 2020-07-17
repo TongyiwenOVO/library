@@ -15,7 +15,7 @@
 
 <h3>SpringMVC文件上传</h3>
 
-<form action="Manager/updateBookAndAuthor" method="post" enctype="multipart/form-data">
+<form action="User/brrowBook" method="post" enctype="multipart/form-data">
     选择上传图书文件：<input type="file" name="bookFile"/><br/>
     id  <input type="text" name="bookId"><br/>
     书名 <input type="text" name="bookName"><br/>

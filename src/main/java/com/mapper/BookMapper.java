@@ -1,5 +1,6 @@
 package com.mapper;
 
+import com.entity.AuthorExample;
 import com.entity.Book;
 import com.entity.BookExample;
 import java.util.List;
@@ -19,6 +20,8 @@ public interface BookMapper {
     List<Book> selectByExample(BookExample example);
 
     List<Book> selectByExampleWithAuthorAndBookType(BookExample example);
+
+    List<Book> selectByExampleWithAuthorAndBookTypeByAuthor(String authorName);
 
     Book selectByPrimaryKeyWithAuthorAndBookType(Integer bookId);
 

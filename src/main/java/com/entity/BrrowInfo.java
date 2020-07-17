@@ -23,9 +23,18 @@ public class BrrowInfo {
 
     private Float moeny;
 
+    private Integer status;
     private Book book;
 
     private Account account;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Book getBook() {
         return book;
@@ -109,6 +118,7 @@ public class BrrowInfo {
                 ", returntime=" + returntime +
                 ", applytime=" + applytime +
                 ", moeny=" + moeny +
+                ", status=" + status +
                 ", book=" + book +
                 ", account=" + account +
                 '}';

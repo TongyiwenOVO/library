@@ -95,6 +95,12 @@
   <sql id="BookTypeAndAuthor_List">
     b.book_id, b.book_name, b.book_number, b.book_typeid, b.authorid, b.publisher, b.publishtime,b.book_photo,bt.type_id,bt.type_name,a.author_id,a.author_name,a.author_photo,a.author_info
   </sql>
+  <select id="selectByExampleWithAuthorAndBookTypeByAuthor" parameterType="string" resultMap="ResultMapWithBookTypeAndAuthor">
+    select
+    <include refid="BookTypeAndAuthor_List" />
+    from book b left join booktype bt on b.book_typeid=bt.type_id left join author a on b.authorid=a.author_id
+    where a.author_name=#{authorName}
+  </select>
   <select id="selectByExampleWithAuthorAndBookType" parameterType="com.entity.BookExample" resultMap="ResultMapWithBookTypeAndAuthor">
     select
     <if test="distinct">

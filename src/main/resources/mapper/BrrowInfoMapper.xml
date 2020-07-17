@@ -9,6 +9,7 @@
     <result column="returntime" jdbcType="DATE" property="returntime" />
     <result column="applytime" jdbcType="INTEGER" property="applytime" />
     <result column="moeny" jdbcType="REAL" property="moeny" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
   </resultMap>
   <resultMap id="ResultMapWithAccountAndBook" type="com.entity.BrrowInfo">
     <id column="bro_id" jdbcType="INTEGER" property="broId" />
@@ -18,6 +19,7 @@
     <result column="returntime" jdbcType="DATE" property="returntime" />
     <result column="applytime" jdbcType="INTEGER" property="applytime" />
     <result column="moeny" jdbcType="REAL" property="moeny" />
+    <result column="status" jdbcType="INTEGER" property="status"/>
     <association property="book" javaType="com.entity.Book">
       <id column="book_id" jdbcType="INTEGER" property="bookId" />
       <result column="book_name" jdbcType="VARCHAR" property="bookName" />
@@ -94,16 +96,23 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    bro_id, userid, bookid, lendtime, returntime, applytime, moeny
+    bro_id, userid, bookid, lendtime, returntime, applytime, moeny, status
   </sql>
   <sql id="AccountAndBook_List">
        *
   </sql>
+  <select id="selectByprimaryKeyWithAccountAndBook" parameterType="java.lang.Integer" resultMap="ResultMapWithAccountAndBook">
+    select
+    <include refid="AccountAndBook_List" />
+    from brrowinfo  left join book  on book_id=bookid left join account on id=userid
+    where bro_id = #{broId,jdbcType=INTEGER}
+  </select>
   <select id="selectByExampleWithAccountAndBookByAccount" parameterType="String" resultMap="ResultMapWithAccountAndBook">
     select
     <include refid="AccountAndBook_List" />
     from brrowinfo  left join book  on book_id=bookid left join account on id=userid
     where account=#{account}
+    order by status desc
   </select>
   <select id="selectByExampleWithAccountAndBook" parameterType="com.entity.BrrowInfoExample" resultMap="ResultMapWithAccountAndBook">
     select
@@ -134,7 +143,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from brrowinfo
     where bro_id = #{broId,jdbcType=INTEGER}
@@ -150,12 +159,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.entity.BrrowInfo">
-    insert into brrowinfo (bro_id, userid, bookid, 
-      lendtime, returntime, applytime, 
-      moeny)
-    values (#{broId,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, 
-      #{lendtime,jdbcType=DATE}, #{returntime,jdbcType=DATE}, #{applytime,jdbcType=INTEGER}, 
-      #{moeny,jdbcType=REAL})
+    insert into brrowinfo (bro_id, userid, bookid,
+      lendtime, returntime, applytime,
+      moeny, status)
+    values (#{broId,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER},
+      #{lendtime,jdbcType=DATE}, #{returntime,jdbcType=DATE}, #{applytime,jdbcType=INTEGER},
+      #{moeny,jdbcType=REAL}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.BrrowInfo">
     insert into brrowinfo
@@ -181,6 +190,9 @@
       <if test="moeny != null">
         moeny,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="broId != null">
@@ -203,6 +215,9 @@
       </if>
       <if test="moeny != null">
         #{moeny,jdbcType=REAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -236,6 +251,9 @@
       <if test="record.moeny != null">
         moeny = #{record.moeny,jdbcType=REAL},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -244,12 +262,13 @@
   <update id="updateByExample" parameterType="map">
     update brrowinfo
     set bro_id = #{record.broId,jdbcType=INTEGER},
-      userid = #{record.userid,jdbcType=INTEGER},
-      bookid = #{record.bookid,jdbcType=INTEGER},
-      lendtime = #{record.lendtime,jdbcType=DATE},
-      returntime = #{record.returntime,jdbcType=DATE},
-      applytime = #{record.applytime,jdbcType=INTEGER},
-      moeny = #{record.moeny,jdbcType=REAL}
+    userid = #{record.userid,jdbcType=INTEGER},
+    bookid = #{record.bookid,jdbcType=INTEGER},
+    lendtime = #{record.lendtime,jdbcType=DATE},
+    returntime = #{record.returntime,jdbcType=DATE},
+    applytime = #{record.applytime,jdbcType=INTEGER},
+    moeny = #{record.moeny,jdbcType=REAL},
+    status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -275,6 +294,9 @@
       <if test="moeny != null">
         moeny = #{moeny,jdbcType=REAL},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where bro_id = #{broId,jdbcType=INTEGER}
   </update>
@@ -285,7 +307,8 @@
       lendtime = #{lendtime,jdbcType=DATE},
       returntime = #{returntime,jdbcType=DATE},
       applytime = #{applytime,jdbcType=INTEGER},
-      moeny = #{moeny,jdbcType=REAL}
+      moeny = #{moeny,jdbcType=REAL},
+      status = #{status,jdbcType=INTEGER}
     where bro_id = #{broId,jdbcType=INTEGER}
   </update>
 </mapper>

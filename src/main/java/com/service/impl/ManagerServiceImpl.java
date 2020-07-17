@@ -44,11 +44,6 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    @Override
-    public List<BookType> getBookType() {
-        List<BookType> bookTypes=bookTypeMapper.selectByExample(null);
-        return bookTypes;
-    }
 
     @Override
     public boolean deleteManyBook(List<Integer> del_ids) {
@@ -76,11 +71,6 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    @Override
-    public List<Book> getBooks() {
-        List<Book> books=bookMapper.selectByExampleWithAuthorAndBookType(null);
-        return books;
-    }
 
     @Override
     public Book getBookById(Integer id) {
@@ -90,7 +80,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public List<BrrowInfo> getBrrowInfo() {
-        List<BrrowInfo> brrowInfos=brrowInfoMapper.selectByExampleWithAccountAndBook(null);
+        BrrowInfoExample example=new BrrowInfoExample();
+        example.setOrderByClause("status DESC");
+        List<BrrowInfo> brrowInfos=brrowInfoMapper.selectByExampleWithAccountAndBook(example);
         return brrowInfos;
     }
 
@@ -100,12 +92,5 @@ public class ManagerServiceImpl implements ManagerService {
         return brrowInfos;
     }
 
-    @Override
-    public List<Book> getBookByName(String bookName) {
-        BookExample example=new BookExample();
-        BookExample.Criteria criteria=example.createCriteria();
-        criteria.andBookNameLike("%"+bookName+"%");
-        List<Book> books=bookMapper.selectByExampleWithAuthorAndBookType(example);
-        return books;
-    }
+
 }

@@ -21,6 +21,7 @@ public interface BrrowInfoMapper {
 
     List<BrrowInfo> selectByExampleWithAccountAndBookByAccount(String account);
 
+    BrrowInfo selectByprimaryKeyWithAccountAndBook(Integer id);
     BrrowInfo selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") BrrowInfo record, @Param("example") BrrowInfoExample example);

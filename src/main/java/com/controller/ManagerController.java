@@ -2,10 +2,7 @@ package com.controller;
 
 import com.entity.Author;
 import com.entity.Book;
-import com.entity.BookType;
 import com.entity.BrrowInfo;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.service.LoginAndRegisterService;
 import com.service.ManagerService;
 import com.utils.Msg;
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +27,7 @@ public class ManagerController {
 
     @Autowired
     LoginAndRegisterService loginAndRegisterService;
+
     /**
      * url:/Manager/getBrrowInfoByAccount
      * 传参：account
@@ -80,47 +77,6 @@ public class ManagerController {
         return Msg.success().add("book",book);
     }
 
-    /**
-     * http://localhost:8080/Manager/getBookByName
-     * 通过书名模糊查找
-     * @param bookName
-     * @return
-     */
-    @RequestMapping("/getBookByName")
-    @ResponseBody
-    public Msg getBookByName(String bookName){
-        if (bookName!=null){
-            List<Book> books=managerService.getBookByName(bookName);
-            return Msg.success().add("bookByName",books);
-        }else {
-            return Msg.fail();
-        }
-    }
-    /**
-     * http://localhost:8080/Manager/getBooks?pn=x
-     * 分页查询图书信息和Author BookType联合查询
-     * @param pn
-     * @return
-     */
-    @RequestMapping("/getBooks")
-    @ResponseBody
-    public Msg getBooks(@RequestParam(value = "pn",defaultValue = "1")Integer pn){
-        PageHelper.startPage(pn,5);
-        List<Book> books=managerService.getBooks();
-        PageInfo pageInfo=new PageInfo(books,5);
-        return Msg.success().add("page",pageInfo);
-    }
-    /**
-     * http://localhost:8080/Manager/getBookType
-     * 在增加book之前先获取booktype，以下拉列表显示
-     * @return
-     */
-    @RequestMapping("/getBookType")
-    @ResponseBody
-    public Msg getBookType(){
-        List<BookType> bookType =managerService.getBookType();
-        return Msg.success().add("booktype",bookType);
-    }
 
     @RequestMapping("/upload")
     @ResponseBody

@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, account, password, role
   </sql>
-  <select id="selectCompleteAccount" parameterType="String" resultMap="BaseResultMap">
+  <select id="selectCompleteAccount" parameterType="string" resultMap="BaseResultMap">
     select * from account where account=#{account}
   </select>
   <select id="selectByExample" parameterType="com.entity.AccountExample" resultMap="BaseResultMap">

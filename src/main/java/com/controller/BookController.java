@@ -92,7 +92,19 @@ public class BookController {
         List<BookType> bookType =bookService.getBookType();
         return Msg.success().add("booktype",bookType);
     }
-
+    /**
+     * http://localhost:8080/Book/getBookById
+     * 通过book_id查询
+     * 在修改时回显调用
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getBookById")
+    @ResponseBody
+    public Msg getBookById(Integer id){
+        Book book=bookService.getBookById(id);
+        return Msg.success().add("book",book);
+    }
     /**
      * http://localhost:8080/Book/getBookByType
      * 通过类型查询 传入id

@@ -63,20 +63,6 @@ public class ManagerController {
         List<BrrowInfo> brrowInfos=managerService.getBrrowInfo();
         return Msg.success().add("brrowinfos",brrowInfos);
     }
-    /**
-     * http://localhost:8080/Manager/getBookById
-     * 通过book_id查询
-     * 在修改时回显调用
-     * @param id
-     * @return
-     */
-    @RequestMapping("/getBookById")
-    @ResponseBody
-    public Msg getBookById(Integer id){
-        Book book=managerService.getBookById(id);
-        return Msg.success().add("book",book);
-    }
-
 
     @RequestMapping("/upload")
     @ResponseBody

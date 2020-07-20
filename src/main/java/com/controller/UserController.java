@@ -46,6 +46,7 @@ public class UserController {
             Account account =(Account) request.getSession().getAttribute("accountinfo");
             Integer id=account.getId();
             //生成借书单
+            brrowInfo.setLendtime(new Date());
             brrowInfo.setUserid(id);
             Boolean result_Bro=userService.insertBrrowInfo(brrowInfo);
             if (result_Bro){

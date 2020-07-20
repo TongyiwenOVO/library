@@ -105,7 +105,7 @@ public class LoginAndRegisterController {
             if (count){
                 return Msg.success();
             }else {
-                return Msg.fail().add("account",account);
+                return Msg.fail();
             }
         }
     }

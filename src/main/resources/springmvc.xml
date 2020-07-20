@@ -35,16 +35,16 @@
         <property name="maxUploadSize" value="10485760"></property>
     </bean>
 
-<!--    &lt;!&ndash;配置登陆拦截器&ndash;&gt;-->
-<!--    <mvc:interceptors>-->
-<!--        <mvc:interceptor>-->
-<!--            <mvc:mapping path="/**"/>-->
-<!--            <bean class="com.interceptor.LoginInterceptor"></bean>-->
-<!--        </mvc:interceptor>-->
-<!--    </mvc:interceptors>-->
+    <!--配置登陆拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
-<!--    &lt;!&ndash;配置异常处理器&ndash;&gt;-->
-<!--    <bean class="com.exception.LoginExceptionResolver"></bean>-->
+    <!--配置异常处理器-->
+    <bean class="com.exception.LoginExceptionResolver"></bean>
 
 
 </beans>

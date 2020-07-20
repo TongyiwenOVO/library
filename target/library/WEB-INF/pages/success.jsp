@@ -14,6 +14,5 @@
 <body>
 测试成功
 <br>
-<fmt:formatDate value="${book}" pattern="yyyy-MM-dd"/>
 </body>
 </html>
